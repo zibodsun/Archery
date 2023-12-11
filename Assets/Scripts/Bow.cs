@@ -5,9 +5,10 @@ using UnityEngine.InputSystem;
 
 public class Bow : MonoBehaviour
 {
-    public GameObject arrow;
+    public Arrow arrow;
     public bool shooting;
     public float speed;
+
     private Vector3 startPos;
 
     float timeCount = 0.0f;
@@ -22,8 +23,10 @@ public class Bow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        arrow.transform.rotation = transform.rotation;
+
         if (shooting) {
-            arrow.transform.position += arrow.transform.forward * speed * Time.deltaTime;
+            arrow.Shoot(speed);
         }
 
         if (Keyboard.current.kKey.wasPressedThisFrame)

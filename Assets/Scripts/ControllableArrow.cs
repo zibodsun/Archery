@@ -8,6 +8,10 @@ public class ControllableArrow : MonoBehaviour
     public Transform tip;
     public float releaseThreshold = 0.2f;
 
+    private Transform notch;
+    public float interpolationSpeed;
+    private float timeCount = 0.0f;
+
     private Rigidbody _rb;
     private bool _inAir = false;
     private Vector3 _lastPosition = Vector3.zero;
@@ -16,6 +20,7 @@ public class ControllableArrow : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody>();
         PullInteraction.PullActionReleased += Release;
+        notch = transform.parent.GetComponent<Transform>();
 
         Stop();
     }
@@ -42,6 +47,7 @@ public class ControllableArrow : MonoBehaviour
     private void FixedUpdate()
     {
         if (_inAir) {
+            RemoteControl();                       // swerves the arrow during flight
             CheckCollision();
             _lastPosition = tip.position;
         }
@@ -64,5 +70,11 @@ public class ControllableArrow : MonoBehaviour
         _rb.isKinematic = true;
     }
 
-
+    // Controls the rotation of a projectile using the notch pointing direction
+    private void RemoteControl() 
+    {
+        transform.rotation = Quaternion.Lerp(transform.rotation, notch.transform.rotation, timeCount * interpolationSpeed); // rotates the gameobject
+        _rb.velocity = transform.forward * _rb.velocity.magnitude;  // rotates the rigidbody
+        timeCount = timeCount + Time.deltaTime;
+    }
 }

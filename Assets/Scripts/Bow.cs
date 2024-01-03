@@ -34,7 +34,7 @@ public class Bow : MonoBehaviour
             arrow.transform.position = startPos;
         }
 
-        // fancy controls
+        // player-controlled trajectory
         arrow.transform.rotation = Quaternion.Lerp(arrow.transform.rotation, transform.rotation, timeCount * interpolationSpeed);
         timeCount = timeCount + Time.deltaTime;
 

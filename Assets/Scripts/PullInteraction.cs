@@ -55,9 +55,10 @@ public class PullInteraction : XRBaseInteractable
         float pullValue = Vector3.Dot(pullDirection, targetDirection) / maxLength;  // value between 0-1 that tells if the values point in the same direction
         return Mathf.Clamp(pullValue, 0, 1);    // returns a value within constraints of a min and max
     }
+    // sets the visuals of the line renderer
     private void UpdateString() {
         Vector3 linePosition = Vector3.forward * Mathf.Lerp(start.transform.localPosition.z, end.transform.localPosition.z, pullAmount);    // take the z value of the pulling point
-        notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.z, linePosition.z + .2f);
+        notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, linePosition.z + .2f);
         _lineRenderer.SetPosition(1, linePosition);
     }
 }

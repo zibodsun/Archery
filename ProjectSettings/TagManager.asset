@@ -7,12 +7,12 @@ TagManager:
   - Teleport
   - Anchor
   - Arrow
-  - ChildArrow
+  - IgnoreCollision
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Modifier
   - Water
   - UI
   - 

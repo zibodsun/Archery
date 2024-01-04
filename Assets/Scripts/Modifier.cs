@@ -25,7 +25,8 @@ public class Modifier : MonoBehaviour
         if (timer > 0f) { return; }
 
         if (other.gameObject.tag == "Arrow") {
-            Arrow arrow = other.gameObject.GetComponent<Arrow>();
+            Debug.Log("Collision");
+            ControllableArrow arrow = other.gameObject.GetComponent<ControllableArrow>();
             arrow.Multiply();
             timer = 5f;         // cooldown after applying the modifier
         }

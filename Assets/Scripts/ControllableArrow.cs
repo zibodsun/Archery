@@ -7,18 +7,21 @@ public class ControllableArrow : MonoBehaviour
     public float speed = 10f;
     public Transform tip;
     public float releaseThreshold = 0.2f;
+    public float force;
 
-    private Transform notch;
-    public float interpolationSpeed;
-    private float timeCount = 0.0f;
+    public Transform notch;
+    public float interpolationSpeed = 0.03f;
+    private float _timeCount = 0.0f;
 
-    private Rigidbody _rb;
-    private bool _inAir = false;
-    private Vector3 _lastPosition = Vector3.zero;
+    private ChildArrow _rightSplitArrow, _leftSplitArrow;     // child arrows for the multiply modifier
+    public GameObject childArrowPrefab;
+    public Rigidbody rb;
+    public bool inAir = false;
+    public Vector3 lastPosition = Vector3.zero;
 
-    private void Awake()
+    public virtual void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         PullInteraction.PullActionReleased += Release;
         notch = transform.parent.GetComponent<Transform>();
 
@@ -35,46 +38,60 @@ public class ControllableArrow : MonoBehaviour
 
         PullInteraction.PullActionReleased -= Release;       // after releasing the method is unbound from the action
         transform.parent = null;                             // unbind from parent
-        _inAir = true;
+        inAir = true;
 
-        //_rb.useGravity = true;
-        _rb.isKinematic = false;
-
-        _rb.AddForce(transform.forward * v * speed, ForceMode.Impulse);     // add a forward force to the rigidbody of the arrow
-        _lastPosition = tip.position;
+        rb.isKinematic = false;
+        force = v * speed;
+        rb.AddForce(transform.forward * force, ForceMode.Impulse);     // add a forward force to the rigidbody of the arrow
+        lastPosition = tip.position;
     }
     // for physics calculations, using FixedUpdate is more reliable than the regular Update function
-    private void FixedUpdate()
+    public virtual void FixedUpdate()
     {
-        if (_inAir) {
+        if (inAir) {
             RemoteControl();                       // swerves the arrow during flight
             CheckCollision();
-            _lastPosition = tip.position;
+            lastPosition = tip.position;
         }
     }
 
     private void CheckCollision()
     {
-        if (Physics.Linecast(_lastPosition, tip.position, out RaycastHit hit)) {
-            if (hit.transform.TryGetComponent(out Rigidbody hitRb)) {
-                transform.parent = hit.transform;
+        if (Physics.Linecast(lastPosition, tip.position, out RaycastHit hit)) {
+            if (hit.transform.tag != "IgnoreCollision" && hit.transform.tag != "Arrow") {   // ignore the modifiers and arrows
+                if (hit.transform.TryGetComponent(out Rigidbody hitRb))
+                {
+                    transform.parent = hit.transform;
+                }
+                Stop();
+                Debug.Log("Collided with something that I should collide with: " + hit.transform.gameObject.name);
             }
-            Stop();
+            
         }
     }
 
     private void Stop()
     {
-        _inAir = false;
-        //_rb.useGravity = false;
-        _rb.isKinematic = true;
+        inAir = false;
+        rb.isKinematic = true;
     }
 
     // Controls the rotation of a projectile using the notch pointing direction
     private void RemoteControl() 
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, notch.transform.rotation, timeCount * interpolationSpeed); // rotates the gameobject
-        _rb.velocity = transform.forward * _rb.velocity.magnitude;  // rotates the rigidbody
-        timeCount = timeCount + Time.deltaTime;
+        transform.rotation = Quaternion.Lerp(transform.rotation, notch.transform.rotation, _timeCount * interpolationSpeed); // rotates the gameobject
+        rb.velocity = transform.forward * rb.velocity.magnitude;  // rotates the rigidbody
+        _timeCount = _timeCount + Time.deltaTime;
+    }
+    // The multiply modifier that creates two additional arrows on the left and right side of this one
+    public void Multiply()
+    {
+        // spawn the other two arrows
+        _rightSplitArrow = Instantiate(childArrowPrefab, transform.position, Quaternion.AngleAxis(20, Vector3.up)).GetComponent<ChildArrow>();
+        _leftSplitArrow = Instantiate(childArrowPrefab, transform.position, Quaternion.AngleAxis(-20, Vector3.up)).GetComponent<ChildArrow>();
+
+        // add force to them so they also go forward
+        _rightSplitArrow.force = force;
+        _leftSplitArrow.force = force;
     }
 }

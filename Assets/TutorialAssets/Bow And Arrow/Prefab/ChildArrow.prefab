@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1769337597633466026}
-  - component: {fileID: 4298253891775687528}
+  - component: {fileID: 7303369797951385586}
   - component: {fileID: 5385233607445731601}
   - component: {fileID: 1703731668530066755}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: ChildArrow
   m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,7 +36,7 @@ Transform:
   - {fileID: 1769337598482281036}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4298253891775687528
+--- !u!114 &7303369797951385586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1769337597633466025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f765ed07bf389eb418faa659fc1a864e, type: 3}
+  m_Script: {fileID: 11500000, guid: 00470164153d13948b240da240eec6a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
@@ -54,7 +54,7 @@ MonoBehaviour:
   force: 0
   notch: {fileID: 0}
   interpolationSpeed: 0.03
-  childArrowPrefab: {fileID: 1769337597633466025, guid: 165d3b3aafa796c49b9488335e6ad5d3, type: 3}
+  childArrowPrefab: {fileID: 0}
   _rb: {fileID: 0}
   _inAir: 0
 --- !u!54 &5385233607445731601

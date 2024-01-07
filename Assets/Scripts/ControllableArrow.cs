@@ -73,6 +73,7 @@ public class ControllableArrow : MonoBehaviour
                     }
                 }
                 Stop();
+                StartCoroutine(Despawn());
                 Debug.Log("Collided with something that I should collide with: " + hit.transform.gameObject.name);
             }
             
@@ -83,6 +84,12 @@ public class ControllableArrow : MonoBehaviour
     {
         inAir = false;
         rb.isKinematic = true;
+    }
+    // despawn timer for arrows that have landed
+    IEnumerator Despawn()
+    {
+        yield return new WaitForSeconds(15f);
+        Destroy(gameObject);
     }
 
     // Controls the rotation of a projectile using the notch pointing direction

@@ -8,6 +8,7 @@ TagManager:
   - Anchor
   - Arrow
   - IgnoreCollision
+  - ReactiveTarget
   layers:
   - Default
   - TransparentFX

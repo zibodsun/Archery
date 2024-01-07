@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ControllableArrow : MonoBehaviour
@@ -54,7 +55,7 @@ public class ControllableArrow : MonoBehaviour
             lastPosition = tip.position;
         }
     }
-
+    // Checks if the arrow has collided with anything
     private void CheckCollision()
     {
         if (Physics.Linecast(lastPosition, tip.position, out RaycastHit hit)) {
@@ -62,6 +63,14 @@ public class ControllableArrow : MonoBehaviour
                 if (hit.transform.TryGetComponent(out Rigidbody hitRb))
                 {
                     transform.parent = hit.transform;
+                    if (hitRb.gameObject.tag == "ReactiveTarget") {
+                        hitRb.AddForce(rb.velocity, ForceMode.Impulse);
+                    }
+
+                    MenuButton b = hitRb.GetComponent<MenuButton>();                        // for triggering menu buttons
+                    if ( b != null) {
+                        b.OnArrowHit();
+                    }
                 }
                 Stop();
                 Debug.Log("Collided with something that I should collide with: " + hit.transform.gameObject.name);
@@ -86,9 +95,11 @@ public class ControllableArrow : MonoBehaviour
     // The multiply modifier that creates two additional arrows on the left and right side of this one
     public void Multiply()
     {
+        transform.rotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);   // resets the rotation of the arrow on its body
+                                                                                                                // so that it splits always horizontally
         // spawn the other two arrows
-        _rightSplitArrow = Instantiate(childArrowPrefab, transform.position, Quaternion.AngleAxis(20, Vector3.up)).GetComponent<ChildArrow>();
-        _leftSplitArrow = Instantiate(childArrowPrefab, transform.position, Quaternion.AngleAxis(-20, Vector3.up)).GetComponent<ChildArrow>();
+        _rightSplitArrow = Instantiate(childArrowPrefab, transform.position,  transform.rotation * Quaternion.AngleAxis(20, Vector3.up)).GetComponent<ChildArrow>();
+        _leftSplitArrow = Instantiate(childArrowPrefab, transform.position, transform.rotation * Quaternion.AngleAxis(-20, Vector3.up)).GetComponent<ChildArrow>();
 
         // add force to them so they also go forward
         _rightSplitArrow.force = force;

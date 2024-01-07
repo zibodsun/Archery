@@ -53,10 +53,11 @@ MonoBehaviour:
   releaseThreshold: 0.2
   force: 0
   notch: {fileID: 0}
-  interpolationSpeed: 0.03
+  interpolationSpeed: 0.02
   childArrowPrefab: {fileID: 1769337597633466025, guid: 165d3b3aafa796c49b9488335e6ad5d3, type: 3}
-  _rb: {fileID: 0}
-  _inAir: 0
+  rb: {fileID: 0}
+  inAir: 0
+  lastPosition: {x: 0, y: 0, z: 0}
 --- !u!54 &5385233607445731601
 Rigidbody:
   m_ObjectHideFlags: 0

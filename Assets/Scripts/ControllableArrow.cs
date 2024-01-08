@@ -9,6 +9,7 @@ public class ControllableArrow : MonoBehaviour
     public Transform tip;
     public float releaseThreshold = 0.2f;
     public float force;
+    public GameObject camera;
 
     public Transform notch;
     public float interpolationSpeed = 0.03f;
@@ -25,7 +26,7 @@ public class ControllableArrow : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         PullInteraction.PullActionReleased += Release;
         notch = transform.parent.GetComponent<Transform>();
-
+        camera = transform.Find("Camera").gameObject;
         Stop();
     }
 
@@ -40,6 +41,8 @@ public class ControllableArrow : MonoBehaviour
         PullInteraction.PullActionReleased -= Release;       // after releasing the method is unbound from the action
         transform.parent = null;                             // unbind from parent
         inAir = true;
+        camera.SetActive(true);
+        transform.rotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);   // reset rotation so camera stays on top
 
         rb.isKinematic = false;
         force = v * speed;
@@ -74,6 +77,7 @@ public class ControllableArrow : MonoBehaviour
                 }
                 Stop();
                 StartCoroutine(Despawn());
+                StartCoroutine(DestroyCamera());
                 Debug.Log("Collided with something that I should collide with: " + hit.transform.gameObject.name);
             }
             
@@ -91,6 +95,12 @@ public class ControllableArrow : MonoBehaviour
         yield return new WaitForSeconds(15f);
         Destroy(gameObject);
     }
+    // detach camera and destroy after timer
+    IEnumerator DestroyCamera() {
+        camera.transform.parent = null;
+        yield return new WaitForSeconds(3f);
+        Destroy(camera);
+    }
 
     // Controls the rotation of a projectile using the notch pointing direction
     private void RemoteControl() 
@@ -98,6 +108,7 @@ public class ControllableArrow : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, notch.transform.rotation, _timeCount * interpolationSpeed); // rotates the gameobject
         rb.velocity = transform.forward * rb.velocity.magnitude;  // rotates the rigidbody
         _timeCount = _timeCount + Time.deltaTime;
+        interpolationSpeed -= 0.0002f;      // control worsens over time
     }
     // The multiply modifier that creates two additional arrows on the left and right side of this one
     public void Multiply()

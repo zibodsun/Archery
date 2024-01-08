@@ -28,7 +28,7 @@ public class ArrowSpawn : MonoBehaviour
 
     private void Update()
     {
-        if (_bow.isSelected && _arrowNotched == false) {
+        if (_bow.isSelected && !_arrowNotched) {
             _arrowNotched = true;
             StartCoroutine("DelayedSpawn");
         }

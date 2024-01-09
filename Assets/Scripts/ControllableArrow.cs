@@ -20,6 +20,7 @@ public class ControllableArrow : MonoBehaviour
     public Rigidbody rb;
     public bool inAir = false;
     public Vector3 lastPosition = Vector3.zero;
+    public LevelManager levelManager;
 
     public virtual void Awake()
     {
@@ -27,6 +28,7 @@ public class ControllableArrow : MonoBehaviour
         PullInteraction.PullActionReleased += Release;
         notch = transform.parent.GetComponent<Transform>();
         camera = transform.Find("Camera").gameObject;
+        levelManager = FindAnyObjectByType<LevelManager>();
         Stop();
     }
 
@@ -68,6 +70,7 @@ public class ControllableArrow : MonoBehaviour
                     transform.parent = hit.transform;
                     if (hitRb.gameObject.tag == "ReactiveTarget") {
                         hitRb.AddForce(rb.velocity, ForceMode.Impulse);
+                        levelManager.UpdateScore();
                     }
 
                     MenuButton b = hitRb.GetComponent<MenuButton>();                        // for triggering menu buttons
@@ -97,6 +100,8 @@ public class ControllableArrow : MonoBehaviour
     }
     // detach camera and destroy after timer
     IEnumerator DestroyCamera() {
+        if (camera == null) yield return null;  // for child arrows without camera
+
         camera.transform.parent = null;
         yield return new WaitForSeconds(3f);
         Destroy(camera);
@@ -108,13 +113,15 @@ public class ControllableArrow : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, notch.transform.rotation, _timeCount * interpolationSpeed); // rotates the gameobject
         rb.velocity = transform.forward * rb.velocity.magnitude;  // rotates the rigidbody
         _timeCount = _timeCount + Time.deltaTime;
-        interpolationSpeed -= 0.0002f;      // control worsens over time
+        interpolationSpeed -= 0.00015f;      // control worsens over time
     }
     // The multiply modifier that creates two additional arrows on the left and right side of this one
     public void Multiply()
     {
         transform.rotation = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);   // resets the rotation of the arrow on its body
                                                                                                                 // so that it splits always horizontally
+        interpolationSpeed = 0;
+
         // spawn the other two arrows
         _rightSplitArrow = Instantiate(childArrowPrefab, transform.position,  transform.rotation * Quaternion.AngleAxis(20, Vector3.up)).GetComponent<ChildArrow>();
         _leftSplitArrow = Instantiate(childArrowPrefab, transform.position, transform.rotation * Quaternion.AngleAxis(-20, Vector3.up)).GetComponent<ChildArrow>();

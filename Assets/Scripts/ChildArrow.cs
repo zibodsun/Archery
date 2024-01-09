@@ -8,9 +8,11 @@ public class ChildArrow : ControllableArrow
     public override void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        levelManager = FindAnyObjectByType<LevelManager>();
         notch = GameObject.Find("Notch").GetComponent<Transform>();     // get the notch from the bow
         lastPosition = transform.position;         // the object is now in global scale, so the last position cannot be initialised at Vector3.zero
         inAir = true;                              // child arrow is already in air
+        interpolationSpeed = 0;
 
         rb.isKinematic = false;
     }

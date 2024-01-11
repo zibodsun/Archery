@@ -71,6 +71,7 @@ public class ControllableArrow : MonoBehaviour
                     if (hitRb.gameObject.tag == "ReactiveTarget") {
                         hitRb.AddForce(rb.velocity, ForceMode.Impulse);
                         levelManager.UpdateScore();
+                        hitRb.gameObject.tag = "Untagged";
                     }
 
                     MenuButton b = hitRb.GetComponent<MenuButton>();                        // for triggering menu buttons

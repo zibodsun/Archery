@@ -5,9 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class StartButton : MenuButton
 {
+    public GameObject buttons;
     public override void OnArrowHit()
     {
         Debug.Log("Start Game");
-        SceneManager.LoadScene("Brown");
+        buttons.SetActive(true);
     }
 }

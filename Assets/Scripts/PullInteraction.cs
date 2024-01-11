@@ -4,6 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class PullInteraction : XRBaseInteractable
 {
+    public AudioSource releaseSound;
     public static event Action<float> PullActionReleased;
 
     public Transform start, end;
@@ -26,6 +27,7 @@ public class PullInteraction : XRBaseInteractable
     // Runs when string is released
     public void Release() {
         PullActionReleased?.Invoke(pullAmount);
+        releaseSound.Play();
         pullingInteractor = null;
         pullAmount = 0f;
         notch.transform.localPosition = new Vector3(notch.transform.localPosition.x, notch.transform.localPosition.y, 0f);  // notch gets pulled back with arrow

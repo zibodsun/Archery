@@ -611,7 +611,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4b37b030a82ad9a4386bfcbe02b966b9, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9edd67fa08d92724c95d673a9bc5194b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.3
   m_Pitch: 1
@@ -1384,7 +1384,7 @@ MonoBehaviour:
   m_OnDeactivate:
     m_PersistentCalls:
       m_Calls: []
-  releaseSound: {fileID: 0}
+  releaseSound: {fileID: 3169921535150138543}
   start: {fileID: 3332024980778981048}
   end: {fileID: 3332024979942845338}
   notch: {fileID: 3332024980221967704}

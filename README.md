@@ -1,2 +1,3 @@
 # Archery
-Game Design - Assignment 2 (Game mechanics)
+A game prototype for a different spin on the traditional VR Archery formula.
+VIDEO: TBD

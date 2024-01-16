@@ -40,12 +40,12 @@ The prototype showcases the concept of "modifiers" designed as buffs that users 
 
 ## Acknowledgments
 ### Credits to used assets
-https://github.com/Fist-Full-of-Shrimp/Bow-and-Arrow-Project-and-Assets
-https://polygone.art/#page=Model&guid=cTSZKTLh0o8
-https://polygone.art/#page=Model&guid=4tOmpD9-xsV
-https://assetstore.unity.com/packages/3d/environments/low-poly-fps-map-lite-258453
-https://assetstore.unity.com/packages/3d/environments/landscapes/free-low-poly-nature-forest-205742
-https://opengameart.org/content/nature-sounds-pack
-The Wrong Side Of Town - By Steve Oxen (Trailer)
-Xbot and Ybot model and poses from https://www.mixamo.com/.
+* https://github.com/Fist-Full-of-Shrimp/Bow-and-Arrow-Project-and-Assets
+* https://polygone.art/#page=Model&guid=cTSZKTLh0o8
+* https://polygone.art/#page=Model&guid=4tOmpD9-xsV
+* https://assetstore.unity.com/packages/3d/environments/low-poly-fps-map-lite-258453
+* https://assetstore.unity.com/packages/3d/environments/landscapes/free-low-poly-nature-forest-205742
+* https://opengameart.org/content/nature-sounds-pack
+* The Wrong Side Of Town - By Steve Oxen (Trailer)
+* Xbot and Ybot model and poses from https://www.mixamo.com/.
 

@@ -7,7 +7,7 @@ A game prototype for a different spin on the traditional VR Archery formula.
 Players have the ability to control the arrow remotely after it's been shot by utilizing the hand that holds the bow. This mechanic challenges players to navigate their arrows through obstacles and reach targets in a dynamic manner.
 
 <a href="https://github.com/zibodsun/Archery">
-    <img src="InfoDiagram.png" alt="diagram" width="300" height="500">
+    <img src="InfoDiagram.png" alt="diagram" width="300" height="440">
 </a>
 
 ### Arrow Control Mechanic

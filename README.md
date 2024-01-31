@@ -6,6 +6,10 @@ A game prototype for a different spin on the traditional VR Archery formula.
 
 Players have the ability to control the arrow remotely after it's been shot by utilizing the hand that holds the bow. This mechanic challenges players to navigate their arrows through obstacles and reach targets in a dynamic manner.
 
+<a href="https://github.com/zibodsun/Archery">
+    <img src="InfoDiagram.png" alt="diagram" width="300" height="500">
+</a>
+
 ### Arrow Control Mechanic
 The arrow's trajectory is intricately tied to the rotation of the user's hand holding the bow. Unity's Lerp function is employed to create a delayed feedback system, ensuring the arrow's rotation mimics the hand's movements. As time progresses, the interpolation speed gradually decreases, limiting the user's control over the arrow and adding an element of urgency to hit the targets.
 

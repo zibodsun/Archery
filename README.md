@@ -1,7 +1,7 @@
 # VR Archery - A Game Mechanic Prototype
 
 A game prototype for a different spin on the traditional VR Archery formula.
-
+{% include youtube.html id="B1SROinDm1A" %}
 ## Description
 
 Players have the ability to control the arrow remotely after it's been shot by utilizing the hand that holds the bow. This mechanic challenges players to navigate their arrows through obstacles and reach targets in a dynamic manner.
